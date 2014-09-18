@@ -1,0 +1,292 @@
+<html>
+<head>
+ 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+ 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+
+	.container { 
+		max-width:935px; 
+		width:100%; 
+		position: relative; 
+		max-height:410px; 
+		overflow: hidden;
+		background: url('http://assets.wwf.org.uk/img/original/polar_bear_bg.jpg')50% 100% no-repeat;
+		background-size: cover;
+	}
+	
+		a.overlay:hover {
+			text-decoration: none;
+		}
+	
+		.container.mobile { 
+			overflow: visible !important;
+		}
+	
+		
+	
+		.container.loading:before {
+			color: #144158;
+			content: "\f110";
+			display: inline-block;
+			font-family: FontAwesome;
+			font-size:3em;
+			font-style: normal;
+			font-weight: normal;
+			line-height: 1;
+			margin-left: -0.5em;
+			margin-top: -0.5em;
+			position: absolute;
+				top:75%;
+				left:50%;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			
+			-webkit-animation: spin 2s infinite linear;
+			-moz-animation: spin 2s infinite linear;
+			-o-animation: spin 2s infinite linear;
+			animation: spin 2s infinite linear;
+		}
+
+	
+	.box {
+		position: relative;
+		top:0;
+		left:0;
+		width: 100%;		/* desired width */
+		margin-top:-10px;
+		opacity:0;
+	}
+	
+	.box:before {
+		content: "";
+		display: block;
+		padding-top: 56.25%; 	/* initial ratio of 1:1*/
+	}
+	
+	.overlay {
+		height:100%;
+		position: absolute;
+		top: 0;
+		left:0;
+		width:100%;
+	}
+	
+	
+		
+		<!--.mobile .overlay { 
+			position: relative;
+			padding-bottom: 20px;
+			float:left;
+			
+			background: url('http://assets.wwf.org.uk/img/original/polar_bear_bg.jpg')50% 100% no-repeat;
+			background-size: cover;
+		}-->
+	
+		.overlay h1, a.overlay:hover h1 {
+			color: #d8682a;
+			font: 400 7em/0.85 WWFRegular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+			margin: 1.3em auto 0;
+			text-align: center;
+			text-decoration: none;
+			text-shadow: white 0px 0 11px;
+				text-shadow: rgba(255,255,255,0.8) 0px 0 11px;
+			text-transform: uppercase;
+			width: 100%;
+			vertical-align: middle;
+		}
+		
+			.overlay h1 span {
+				clear:left;
+				float:left;
+			}
+			
+			.mobile .overlay h1 { float:left; }
+		
+		.overlay h2, a.overlay:hover h2{
+			color: #00728F;
+			margin: 0.2em auto 0;
+			text-align: center;
+			text-shadow: white 0px 0 11px;
+				text-shadow: rgba(255,255,255,0.8) 0px 0 11px;
+			text-transform: uppercase;
+		}
+			
+		.muting {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			color: white;
+		}
+		
+		.muting i { font-size:1.5em; width: 0.8em }
+		
+		.IEalert { display:none; }
+		
+		.overlay .wwf_button { position: absolute; bottom: 20px; right: 20px; font-size: 2em; }
+				
+			.overlay .wwf_button:after { width: 14px; height: 14px; top: 19px; }
+			
+				.overlay:hover span.wwf_button {
+					background: white !important;
+					color: #d8682a;
+					border-bottom: solid 3px #d8682a;
+				}
+			
+				.overlay:hover .wwf_button:after {
+					color: #d8682a;
+					border-top: 2px solid #d8682a;
+					border-right: 2px solid #d8682a;
+				}
+	
+	@media (max-width: 560px) {
+	
+		.box { display:none; }
+		
+		.overlay { position: relative }
+		
+		a.overlay:hover h1,a.overlay:hover h2,.overlay h1,.overlay h2 {
+			font: 400 4.2em/0.85 WWFRegular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+			margin: 10px;
+			text-align: left;
+		}
+		
+		a.overlay:hover h2,.overlay h2 {
+			display:block;
+			float:left;
+			font: 400 2em/0.85 WWFRegular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+			position:relative;
+		}
+
+		a.overlay:hover .container,.container { 
+			margin-bottom:10px;
+			max-height:500px; 
+		}
+		
+		a.overlay:hover .wwf_button,.overlay .wwf_button {
+			clear:left;
+			position: relative;
+			font-size: 1.5em;
+			right: 0;
+			bottom: 0;
+			float: right !important;
+			margin: 10px !important;
+		}
+
+</style>
+
+<script>
+
+		$(document).ready(function(){
+		
+			//console.log('dom ready');
+			
+			
+			
+			if(typeof dontplay === 'undefined'){
+				var tag = document.createElement('script');
+				tag.src = "https://www.youtube.com/player_api" ;
+				var firstScriptTag = document.getElementsByTagName('script')[0];
+				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		
+				
+				var player;
+			}
+	
+			
+				
+			
+			
+			function detectmob() { 
+				if( navigator.userAgent.match(/Android/i)
+					|| navigator.userAgent.match(/webOS/i)
+					|| navigator.userAgent.match(/iPhone/i)
+					|| navigator.userAgent.match(/iPad/i)
+					|| navigator.userAgent.match(/iPod/i)
+					|| navigator.userAgent.match(/BlackBerry/i)
+					|| navigator.userAgent.match(/Windows Phone/i)
+				){
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		
+			if(detectmob()){ 
+				//console.log('bong');
+				$('.box').hide();
+				$('.overlay').css('position','relative');
+				$('.container').addClass('mobile');
+				$('.container').removeClass('loading');
+			}
+		
+		})
+		
+		function onYouTubePlayerAPIReady() {
+			console.log('api ready');
+			player = new YT.Player('ytplayer', {
+				height: $('.box').height(),
+				width: $('.box').width(),
+				//videoId: 'CcR70rEauvA',
+				videoId: 'T_PvFc35aso',
+				//videoId: '0Bmhjf0rKe8',
+				playerVars : {
+					controls:0,
+					color: 'white',
+					loop: 1,
+					rel: 0,
+					autoplay: 1,
+					showInfo: 0,
+					//start: 20,
+            				wmode: "transparent"
+				},
+				events: {
+					'onReady': onPlayerReady,
+					'onStateChange': onPlayerStateChange
+				}
+
+			});
+			
+		}
+		
+		function onPlayerReady(event) {
+			event.target.mute();
+			//console.log('on player event ready');
+			// Anything else you want to do, like start playback...
+		}
+
+		// when video ends
+		function onPlayerStateChange(event) {      
+			//console.log('on player state change');  
+			if(event.data === 0) {          
+				event.target.playVideo();
+			} else if (event.data === 1){
+				$('.box').css('opacity','1');
+				$('.container').removeClass('loading');
+				_gaq.push(['_trackEvent', 'Videos', 'Play', 'Polar bear homepage banner',null,true]);;
+
+			}
+		}
+
+</script> 
+</head>
+<body>
+<div class="container loading">
+
+	<div class='box' id='ytplayer'> 
+		<!--<div class='content'>Aspect ratio of 1:1</div> -->
+	</div>
+	
+	<a href="http://www.arctichome.co.uk/" target="_blank"class="overlay">
+	
+		<h1>We love polar bears!</h1>
+		
+		<h2>Every &pound;1 you donate to polar bears Coca-cola will match</h2>
+		
+		<span class="wwf_button">Donate today <span class="visuallyhidden">at Arctic Home</span> </span>
+		
+	</a>
+	
+</div>
+</body>
+</html>
